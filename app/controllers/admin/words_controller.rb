@@ -1,11 +1,32 @@
-class WordsController < ApplicationController
+class Admin::WordsController < ApplicationController
   before_action :logged_in_user, :load_dependencies
+  before_action :admin_user, only: [:create, :new]
 
   def index
     @words = Word.all.paginate page: params[:page]
   end
 
+  def new
+    @word = Word.new
+    4.times{@word.word_answers.build}
+  end
+
+
+  def create
+    @word = Word.new word_params
+    if @word.save
+      redirect_to admin_words_path
+    else
+      render :new
+    end
+  end
+
   private
+
+  def word_params
+    params.require(:word).permit :id, :category_id, :content,
+                                 word_answers_attributes: [:id, :content, :correct, :word_id]
+  end
 
   def load_dependencies
     @categories = Category.all
@@ -33,4 +54,7 @@ class WordsController < ApplicationController
     end
   end
 
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 end

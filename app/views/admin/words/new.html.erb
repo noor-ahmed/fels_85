@@ -1,0 +1,32 @@
+<% provide(:title, t(:add_new_word)) %>
+<div class="row">
+  <div class="center">
+  <h1><%= t(:add_new_word)%></h1>
+  </div>
+  <br>
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for [:admin, @word] do |f| %>
+    <div class="form-group">
+      <%= f.label :category %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: t(:select_category)}, {class: "form-control"} %>
+    </div>
+    <div class="form-group">
+      <%= f.label :word %>
+      <%= f.text_field :content,  class: 'form-control'%>
+    </div>
+    <%= f.label :content , t(:answers)%>
+    <%= f.fields_for :word_answers do |word_answer_form| %>
+    <div class="input-group">
+      <span class="input-group-addon">
+        <%= word_answer_form.radio_button :correct, true %>
+        <%= word_answer_form.label :This_is_Correct %>
+        <br>
+      </span>
+        <%= word_answer_form.text_field :content, class: 'form-control'%>
+    </div>
+    <% end %>
+    <br>
+    <%= f.submit t (:add_word), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

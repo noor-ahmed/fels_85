@@ -6,4 +6,8 @@ class WordAnswer < ActiveRecord::Base
 
   scope :correct, -> { where(correct: true) }
   scope :correct_content, -> { correct.first.content }
+
+  def to_s
+    content
+  end
 end

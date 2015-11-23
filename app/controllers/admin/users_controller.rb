@@ -3,8 +3,9 @@ class Admin::UsersController < ApplicationController
   before_action :admin_user, only:  [:edit, :update, :destroy]
   before_action :load_user, only: [:show, :edit, :update, :destroy]
 
+
   def index
-    @users = User.paginate page: params[:page]
+
   end
 
   def new
@@ -38,8 +39,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    flash[:success] = t :user_deleted
+    User.find(params[:id]).destroy
+    flash[:success] = t :user_deletd
     redirect_to users_url
   end
 
@@ -63,4 +64,5 @@ class Admin::UsersController < ApplicationController
   def load_user
     @user = User.find params[:id]
   end
+
 end

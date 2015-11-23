@@ -1,7 +1,8 @@
 <li>
-  <%= gravatar_for user %> <!-- , size: 50  -->
+  <%= gravatar_for user %>
   <%= link_to user.name, user %>
   <% if current_user.admin? && !current_user?(user) %>
+      <!--<%= link_to (t(:delete)), "/admin/users/#{user.id}", method: :delete, data: { confirm: (t :remove_confirmation) } %>-->
       <%= link_to (t(:delete)), [:admin, user], method: :delete, data: { confirm: (t :remove_confirmation) } %>
   <% end %>
 </li>
